@@ -1,0 +1,278 @@
+/* Virtualize LLC - Enterprise Website Stylesheet
+ * Implements a scalable design system with responsive components
+ * Core features:
+ * - Modular scale-based typography
+ * - Fluid responsive layouts
+ * - Accessible color system
+ * - Performance-optimized animations
+ */
+
+/* Design Tokens
+ * Centralized configuration for maintainable theming
+ * Structured with semantic naming for clearer intent
+ */
+:root {
+    /* Color System
+     * Primary: Core brand colors for main UI elements
+     * Surface: Background and container variations
+     * Content: Text and border colors
+     */
+    --color-primary-100: hsl(207, 100%, 95%);
+    --color-primary-500: hsl(207, 100%, 40%);  /* #007acc - Main brand */
+    --color-primary-600: hsl(207, 100%, 32%);  /* #005fa3 - Interactive */
+    --color-primary-700: hsl(207, 100%, 25%);  /* #004d85 - Pressed */
+    
+    --color-accent-300: hsl(51, 100%, 80%);
+    --color-accent-500: hsl(51, 100%, 50%);    /* #ffd700 - Attention */
+    --color-accent-600: hsl(51, 100%, 45%);    /* #ffce00 - Hover */
+    
+    --color-surface-50: hsl(0, 0%, 98%);
+    --color-surface-100: hsl(0, 0%, 96%);      /* #f4f4f4 - Background */
+    --color-surface-200: hsl(0, 0%, 94%);
+    
+    --color-content-700: hsl(0, 0%, 20%);      /* #333333 - Primary text */
+    --color-content-500: hsl(0, 0%, 40%);      /* #666666 - Secondary text */
+    --color-content-300: hsl(0, 0%, 60%);      /* #999999 - Disabled */
+
+    /* Typography System
+     * Implements modular scale for harmonious sizing
+     * Base: 16px (1rem) with 1.25 ratio
+     */
+    --font-family-primary: 'Nunito', system-ui, -apple-system, sans-serif;
+    --font-family-heading: 'Montserrat', system-ui, -apple-system, sans-serif;
+    
+    --font-size-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
+    --font-size-sm: clamp(0.875rem, 0.8rem + 0.375vw, 1rem);
+    --font-size-base: clamp(1rem, 0.9rem + 0.5vw, 1.125rem);
+    --font-size-lg: clamp(1.125rem, 1rem + 0.625vw, 1.25rem);
+    --font-size-xl: clamp(1.25rem, 1.1rem + 0.75vw, 1.5rem);
+    --font-size-2xl: clamp(1.5rem, 1.3rem + 1vw, 2rem);
+    --font-size-3xl: clamp(2rem, 1.8rem + 1.25vw, 2.5rem);
+
+    /* Spacing System
+     * Consistent spacing using 8px (0.5rem) grid
+     * Provides rhythmic layout across components
+     */
+    --space-3xs: clamp(0.25rem, 0.2rem + 0.25vw, 0.375rem);
+    --space-2xs: clamp(0.5rem, 0.4rem + 0.5vw, 0.75rem);
+    --space-xs: clamp(0.75rem, 0.6rem + 0.75vw, 1rem);
+    --space-sm: clamp(1rem, 0.8rem + 1vw, 1.5rem);
+    --space-md: clamp(1.5rem, 1.2rem + 1.5vw, 2rem);
+    --space-lg: clamp(2rem, 1.6rem + 2vw, 3rem);
+    --space-xl: clamp(3rem, 2.4rem + 3vw, 4rem);
+
+    /* Layout Configuration
+     * Defines core layout metrics and breakpoints
+     */
+    --container-width-sm: 640px;
+    --container-width-md: 768px;
+    --container-width-lg: 1024px;
+    --container-width-xl: 1280px;
+    
+    --border-radius-sm: 4px;
+    --border-radius-md: 8px;
+    --border-radius-lg: 16px;
+    
+    /* Animation Tokens
+     * Consistent motion characteristics
+     */
+    --transition-duration-fast: 150ms;
+    --transition-duration-base: 300ms;
+    --transition-duration-slow: 500ms;
+    --transition-timing: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Base Styles
+ * Foundational resets and defaults
+ * Ensures consistent cross-browser rendering
+ */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* Enhanced focus styles for better accessibility
+ * Maintains visibility while fitting design system
+ */
+:focus-visible {
+    outline: 2px solid var(--color-primary-500);
+    outline-offset: 2px;
+    border-radius: var(--border-radius-sm);
+}
+
+/* Performance optimizations for animations
+ * Respects user preferences for reduced motion
+ */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* Typography
+ * Implements fluid type scaling and vertical rhythm
+ */
+body {
+    font-family: var(--font-family-primary);
+    font-size: var(--font-size-base);
+    line-height: 1.6;
+    color: var(--color-content-700);
+    background-color: var(--color-surface-100);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Header Component
+ * Primary navigation and branding area
+ * Implements subtle parallax effect
+ */
+.header {
+    position: relative;
+    background-color: var(--color-primary-500);
+    padding: var(--space-lg) var(--space-md);
+    color: var(--color-surface-50);
+    isolation: isolate;
+}
+
+.header::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+        circle at center,
+        rgba(255, 255, 255, 0.1) 0%,
+        transparent 70%
+    );
+    transform: rotate(25deg);
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* Navigation Component
+ * Responsive navigation with enhanced accessibility
+ */
+.nav {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-md);
+    padding: var(--space-sm);
+    background-color: var(--color-primary-600);
+    flex-wrap: wrap;
+}
+
+.nav__link {
+    color: var(--color-surface-50);
+    text-decoration: none;
+    padding: var(--space-2xs) var(--space-xs);
+    border-radius: var(--border-radius-sm);
+    transition: all var(--transition-duration-base) var(--transition-timing);
+    
+    &:hover, &:focus-visible {
+        color: var(--color-accent-500);
+        background-color: rgba(255, 255, 255, 0.1);
+    }
+}
+
+/* Hero Section
+ * Implements parallax scrolling and gradient overlay
+ */
+.hero {
+    position: relative;
+    min-height: 80vh;
+    display: grid;
+    place-items: center;
+    text-align: center;
+    padding: var(--space-xl) var(--space-md);
+    color: var(--color-surface-50);
+    isolation: isolate;
+    
+    &::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: linear-gradient(
+            to bottom,
+            rgba(0, 0, 0, 0.4),
+            rgba(0, 0, 0, 0.8)
+        );
+        z-index: -1;
+    }
+}
+
+/* Service Cards
+ * Interactive component with hover effects
+ * Implements grid-based responsive layout
+ */
+.services {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+    gap: var(--space-lg);
+    padding: var(--space-xl) var(--space-md);
+    margin-inline: auto;
+    max-width: var(--container-width-xl);
+}
+
+.service-card {
+    background: var(--color-surface-50);
+    padding: var(--space-lg);
+    border-radius: var(--border-radius-md);
+    box-shadow: 
+        0 2px 4px rgba(0, 0, 0, 0.05),
+        0 4px 8px rgba(0, 0, 0, 0.05);
+    transition: 
+        transform var(--transition-duration-base) var(--transition-timing),
+        box-shadow var(--transition-duration-base) var(--transition-timing);
+    
+    &:hover, &:focus-within {
+        transform: translateY(-4px);
+        box-shadow: 
+            0 4px 8px rgba(0, 0, 0, 0.1),
+            0 8px 16px rgba(0, 0, 0, 0.1);
+    }
+}
+
+/* Utility Classes
+ * Common modifiers for spacing and typography
+ */
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Print Styles
+ * Optimizes layout for printed media
+ */
+@media print {
+    .hero::before {
+        display: none;
+    }
+    
+    .service-card {
+        break-inside: avoid;
+        box-shadow: none;
+    }
+}
+
+/* Responsive Breakpoints
+ * Mobile-first approach with strategic breakpoints
+ */
+@media (max-width: 768px) {
+    .nav {
+        gap: var(--space-xs);
+    }
+    
+    .services {
+        gap: var(--space-md);
+    }
+}
